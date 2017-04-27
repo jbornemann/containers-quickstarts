@@ -26,7 +26,7 @@ This demonstration describes how to produce a new Source to Image (S2I) builder 
 
 ## Overview
 
-OpenShift provides several out of the box Source to Image builder images. To support the vast ecosystem of applications developed using the Play Framework, a new builder image will be created to support a simplified deployment to OpenShift. Once the new image is produced, an example application will be deployed. 
+OpenShift provides several out of the box Source to Image builder images. To support the vast ecosystem of applications developed using the Play Framework, a new builder image will be created to support a simplified deployment to OpenShift. Once the new image is produced, an example application will be deployed.
 
 ## Bill of Materials
 
@@ -77,7 +77,7 @@ The Play Framework builder image can be created using the [Git](https://docs.ope
 The content used to produce the Play builder image can originate from a Git repository. Execute the following command to start a new image build using the git source strategy.:
 
 ```
-oc new-build registry.access.redhat.com/rhel7.2~https://github.com/redhat-cop/containers-quickstarts --context-dir=s2i-play --name=s2i-play --strategy=docker --follow=true
+oc new-build registry.access.redhat.com/rhel7.2~https://github.com/redhat-cop/containers-quickstarts --context-dir=s2i-play --name=s2i-play --strategy=docker
 ```
 
 Let's break down the command in further detail
@@ -89,7 +89,6 @@ Let's break down the command in further detail
 * `--context-dir` - Location within the repository containing source code
 * `--name=s2i-play` - Name for the build and resulting image
 * `--strategy=docker` - Name of the OpenShift source strategy that is used to produce the new image
-* `--follow=true` - Follows the build process in the command window
 
 *Note: If the repository was moved to a different location (such as a fork), be sure to reference to correct location.*
 
@@ -97,12 +96,12 @@ A new image called *s2i-play* was produced and can be used to build Play Framewo
 
 #### Binary Source
 
-Instead of referencing a git repository, the content can be provided directly to the OpenShift build process using a binary source build. 
+Instead of referencing a git repository, the content can be provided directly to the OpenShift build process using a binary source build.
 
 The first step is to obtain the source code containing the builder. Once the code has been obtained, navigate to the folder containing the Play Framework *Dockerfile*, and execute the following command to start a new image build using the binary source strategy:
 
 ```
-oc new-build registry.access.redhat.com/rhel7.2 --name=s2i-play --strategy=docker --from-dir=. --binary=true --follow=true
+oc new-build registry.access.redhat.com/rhel7.2 --name=s2i-play --strategy=docker --from-dir=. --binary=true
 ```
 
 Let's break down the command in further detail
@@ -113,13 +112,12 @@ Let's break down the command in further detail
 * `--name=s2i-play` - Name for the build and resulting image
 * `--strategy=docker` - Name of the OpenShift source strategy that is used to produce the new image
 * `--binary=true` - Specifies this build will be of a binary source type
-* `--follow=true` - Follows the build process in the command window
 
 A new image called *s2i-play* was produced and can be used to build Play Framework applications in the subsequent sections.
 
 ### Create a new Application
 
-To demonstrate the usage of the newly created builder image, an example application from the Play Framework will be built and deployed using the Source to Image process. 
+To demonstrate the usage of the newly created builder image, an example application from the Play Framework will be built and deployed using the Source to Image process.
 
 Create the new application by passing in the name of the builder image created previously and the git repository containing the source code:
 
@@ -187,7 +185,7 @@ The application will automatically deploy once a change to the configuration is 
 
 ### Create a Route
 
-By default, applications created using the `oc new-app` command without the use of a template will not have a route created. This results in the application being inaccessible from outside the OpenShift cluster. 
+By default, applications created using the `oc new-app` command without the use of a template will not have a route created. This results in the application being inaccessible from outside the OpenShift cluster.
 
 Execute the following command to expose the exisitng *play-app* service:
 
